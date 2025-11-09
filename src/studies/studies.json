@@ -1,0 +1,5 @@
+{
+  "layout": "study",
+  "tags": "studies",
+  "permalink": "/study/{{ title | slugify }}/index.html"
+}
