@@ -1,8 +1,8 @@
 {
-  "name": "eleventy-excellent",
+  "name": "CritLit",
   "version": "4.5.0",
-  "description": "Eleventy starter built around the workflow suggested by Andy Bell's buildexcellentwebsit.es.",
-  "author": "Lene Saile",
+  "description": "A living repository of influential literature in critical care medicine.",
+  "author": "Nikhil Patel",
   "license": "ISC",
   "type": "module",
   "engines": {
@@ -26,7 +26,7 @@
   "keywords": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/madrilene/eleventy-excellent.git"
+    "url": "https://github.com/nikhilpatelmd/CritLit.git"
   },
   "dependencies": {
     "@11ty/eleventy": "^3.1.2",
