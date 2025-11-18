@@ -96,6 +96,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addFilter('shuffle', filters.shuffleArray);
   eleventyConfig.addFilter('alphabetic', filters.sortAlphabetically);
   eleventyConfig.addFilter('slugify', filters.slugifyString);
+  eleventyConfig.addFilter('where', filters.collectionWhere);
 
   // --------------------- Shortcodes
   eleventyConfig.addShortcode('svg', shortcodes.svgShortcode);
@@ -111,9 +112,12 @@ export default async function (eleventyConfig) {
   // --------------------- Passthrough File Copy
 
   // -- same path
-  ['src/assets/fonts/', 'src/assets/images/template', 'src/assets/og-images'].forEach(path =>
-    eleventyConfig.addPassthroughCopy(path)
-  );
+  [
+    'src/assets/fonts/',
+    'src/assets/images/template',
+    'src/assets/images/backgrounds',
+    'src/assets/og-images'
+  ].forEach(path => eleventyConfig.addPassthroughCopy(path));
 
   eleventyConfig.addPassthroughCopy({
     // -- to root

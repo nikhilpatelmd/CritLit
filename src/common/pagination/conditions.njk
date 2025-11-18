@@ -1,0 +1,46 @@
+---
+layout: tags
+pagination:
+  data: collections.uniqueConditions
+  size: 1
+  alias: currentConditionName
+permalink: '/conditions/{{ currentConditionName | slugify }}/index.html'
+eleventyComputed:
+  title: '{{ currentConditionName }}'
+---
+
+{# --- FILTERING FIX: Use the 'where' filter on the singular data property --- #}
+{% set trialsForThisCondition = collections.allStudies | where('data.condition', currentConditionName) %}
+
+
+<custom-masonry layout="50-50" class="region" style="--region-space-bottom: var(--space-xl-2xl);">
+  {# Now loop through the filtered list 'trialsForThisCondition' #}
+  {% if trialsForThisCondition.length > 0 %}
+    {% for item in trialsForThisCondition %}
+      {% set headingLevel = "h2" %}
+      {% set definedDate = item.data.datePublished %}
+      {% include "partials/card-study.njk" %}
+    {% endfor %}
+  {% else %}
+    <p class="prose text-center" style="grid-column: 1 / -1;">
+      No studies found for the condition "{{ currentConditionName }}".
+    </p>
+  {% endif %}
+</custom-masonry>
+
+<h2 class="text-step-2">More conditions</h2>
+
+<ul class="taglist | my-s-m cluster gutter-s" role="list">
+  {# Loop through all unique condition names #}
+  {% for conditionNameLoop in collections.uniqueConditions %}
+    <li>
+      <a
+        href="/conditions/{{ conditionNameLoop | slugify }}/" 
+        class="button {% if conditionNameLoop == currentConditionName %}is-active{% endif %}" 
+        data-small-button 
+        {% if conditionNameLoop == currentConditionName %}aria-current="page"{% endif %}>
+        {{ conditionNameLoop }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

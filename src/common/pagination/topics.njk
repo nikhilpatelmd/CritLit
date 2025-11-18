@@ -1,0 +1,47 @@
+---
+layout: tags
+pagination:
+  data: collections.uniqueTopics
+  size: 1
+  alias: currentTopicName
+permalink: '/topics/{{ currentTopicName | slugify }}/index.html'
+eleventyComputed:
+  title: '{{ currentTopicName }}'
+---
+
+{# --- FILTERING: Use the registered 'where' filter to find studies for this topic --- #}
+{% set studiesForThisTopic = collections.allStudies | where('data.topic', currentTopicName) %}
+
+
+<custom-masonry layout="50-50" class="region" style="--region-space-bottom: var(--space-xl-2xl);">
+  {# Loop through the filtered list 'studiesForThisTopic' #}
+  {% if studiesForThisTopic.length > 0 %}
+    {% for item in studiesForThisTopic %}
+      {% set headingLevel = "h2" %}
+      {% set definedDate = item.data.datePublished %}
+      {# Use the correct card partial #}
+      {% include "partials/card-study.njk" %}
+    {% endfor %}
+  {% else %}
+    <p class="prose text-center" style="grid-column: 1 / -1;">
+      No studies found for the topic "{{ currentTopicName }}".
+    </p>
+  {% endif %}
+</custom-masonry>
+
+<h2 class="text-step-2">More topics</h2>
+
+<ul class="taglist | my-s-m cluster gutter-s" role="list">
+  {# Loop through all unique topic names #}
+  {% for topicNameLoop in collections.uniqueTopics %}
+    <li>
+      <a
+        href="/topics/{{ topicNameLoop | slugify }}/"
+        class="button {% if topicNameLoop == currentTopicName %}is-active{% endif %}"
+        data-small-button
+        {% if topicNameLoop == currentTopicName %}aria-current="page"{% endif %}>
+        {{ topicNameLoop }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>

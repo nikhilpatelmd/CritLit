@@ -11,7 +11,7 @@ export const getAllPosts = collection => {
 /** All study summaries as a collection. */
 export const getAllStudies = collection => {
   // Filters for all Markdown files in the src/studies folder, similar to getAllPosts.
-  return collection.getFilteredByGlob('./src/studies/**/*.md').reverse();
+  return collection.getFilteredByGlob('./src/studies/**/*.md');
 };
 
 /** All tags from all posts as a collection - excluding custom collections */

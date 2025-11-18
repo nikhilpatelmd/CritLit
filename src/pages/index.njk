@@ -2,33 +2,82 @@
 layout: base
 permalink: /index.html
 title: 'CritLit'
-description: 'A living repository of influential literature in critical care medicine.'
-blog:
-  title: 'Latest Summaries'
-  intro: "I'm showing the last 4 blog posts, but there might be more!"
+customHeader: true
 ---
 
-<div class="wrapper">
-  <header class="full | section" style="--spot-color: var(--color-primary)">
-    <div class="section__inner flow region">
-      <h2 class="text-center" style="color: var(--color-light);">{{ description }}</h2>
-    </div>
-  </header>
+<div class="full | section hero-with-image" style="margin-top: calc(var(--space-xl-2xl) * -1);">
+  <div class="section__inner">
+    <header style="padding-top: var(--space-xl-2xl);">
+      {% include "partials/header.njk" %}
+    </header>
 
-  <section class="full | region">
-    <div class="prose wrapper flow">
-      {% if blog.intro %}
-        <p>{{ blog.intro }}</p>
-      {% endif %}
-      <div class="feature |  region region-space-l">
-        <custom-masonry layout="50-50">
-          {% set itemList = collections.allPosts %}
-					{% asyncEach item in itemList.slice(0, 4) %}
-            {% set headingLevel = "h3" %}
-						{% include "partials/card-blog.njk" %}
-					{% endeach %}
-        </custom-masonry>
+    <div class="wrapper region" style="--region-space-top: var(--space-xl); --region-space-bottom: var(--space-xl);">
+      <div class="sidebar" style="--sidebar-target-width: 29rem; --sidebar-content-min-width: 40%;">
+
+        <div class="flow prose">
+          <h1 class="text-step-5">{{ meta.siteDescription }}</h1>
+          <p class="text-step-1">
+            Browse the latest summaries here or explore by condition or topic below.
+          </p>
+        </div>
+
+        <div class="flow">
+          <div class="grid" style="--grid-min-item-size: 20rem; --gutter: var(--space-xs);">
+            {% set itemList = collections.allStudies %}
+            {% for item in itemList.slice(0, 4) %}
+              {% set headingLevel = "h3" %}
+              {% set definedDate = item.data.datePublished %}
+              {% set isCompact = true %}
+              {% include "partials/card-study.njk" %}
+            {% endfor %}
+          </div>
+          <div class="text-center" style="margin-top: var(--space-m);">
+            <a href="/studies/" class="button" data-small-button>View All Studies</a>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
+
+<div class="full | section" style="--spot-color: var(--color-bg);">
+  <div class="section__inner">
+    <div class="wrapper region">
+      <div class="flow prose">
+        <h2>Explore by Condition</h2>
+        <ul class="taglist | my-s-m cluster gutter-s" role="list">
+          {% for conditionName in collections.uniqueConditions %}
+            <li>
+              <a href="/conditions/{{ conditionName | slugify }}/" class="button" data-small-button>
+                {{ conditionName }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full | section" style="--spot-color: var(--color-bg);">
+  <div class="section__inner">
+    <div class="wrapper region">
+      <div class="flow prose">
+        <h2>Explore by Topic</h2>
+        <ul class="taglist | my-s-m cluster gutter-s" role="list">
+          {% for topicName in collections.uniqueTopics %}
+            <li>
+              <a href="/topics/{{ topicName | slugify }}/" class="button" data-small-button>
+                {{ topicName }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% css "local" %}
+  {% include "css/hero-with-image.css" %}
+{% endcss %}

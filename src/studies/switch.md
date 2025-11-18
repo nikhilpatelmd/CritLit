@@ -7,9 +7,9 @@ doi: 10.1016/S0140-6736(24)00702-5
 pmid: 38761811
 trialRegistration: NCT02258919
 fundingSource: Swiss National Science Foundation, Swiss Heart Foundation, Inselspital Stiftung, and Boehringer Ingelheim
-conditions:
+condition:
   - Intracerebral Hemorrhage
-topics:
+topic:
   - Neurosurgical Intervention
   - Decompressive Craniectomy
 

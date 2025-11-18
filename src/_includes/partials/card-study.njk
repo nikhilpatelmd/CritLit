@@ -1,112 +1,39 @@
 {% set headingLevel = headingLevel | default("h2") %}
 {% set definedDate = definedDate | default(item.data.datePublished) %}
-{% set isCompact = isCompact | default(false) %}
-{% set showTopics = showTopics | default(true) %}
+{% set showTopics = showTopics | default(false) %}
 {% set showPICO = showPICO | default(true) %}
 
-<custom-card clickable class="flow universal-card{% if isCompact %} compact{% endif %}" style="--flow-space: var(--space-s);">
-  <!-- Group 1: Title/Acronym -->
-  <div class="card-group">
-    <{{ headingLevel }} slot="headline" class="{% if isCompact %}text-step-2{% else %}text-step-2{% endif %}">
-      <a href="{{ item.url | url }}">{{ item.data.acronym }}</a>
-    </{{ headingLevel }}>
+
+<custom-card clickable>
+  <{{ headingLevel }} slot="headline" class="text-step-2">
+    <a href="{{ item.url | url }}">{{ item.data.acronym }}</a>
+  </{{ headingLevel }}>
+
+  <span slot="date" class="text-step-min-1"> Published on {% include "partials/date.njk" %} in
+    {% if item.data.journal %}
+      <span>{{ item.data.journal }}</span>
+      {% endif %}
+  </span>
+
+<div slot="tag" class="tag-container | cluster" style="--gutter: var(--space-2xs)">
+    {% if item.data.condition and item.data.condition.length > 0 %}
+      {% for condition in item.data.condition %}
+        <span class="button" data-button-variant="primary" data-small-button>{{ condition }}</span>
+      {% endfor %}
+    {% endif %}
+
+    {% if (not isCompact or showTopics) and item.data.topic and item.data.topic.length > 0 %}
+      {% for topic in item.data.topic %}
+        <span class="button" data-button-variant="secondary" data-small-button>{{ topic }}</span>
+      {% endfor %}
+    {% endif %}
   </div>
 
-  <!-- Group 2: Publication Info -->
-  <div class="card-group">
-    <div slot="date" class="publication-info">
-      <span>Published</span>
-      <time datetime="{{ definedDate | toIsoString }}">{{ definedDate | formatDate('MMMM D, YYYY') }}</time>
-      {% if item.data.journal %}
-      in <span>{{ item.data.journal }}</span>
-      {% endif %}
-    </div>
-  </div>
-
-  <!-- Group 3: Conditions and Topics -->
-  <div class="card-group">
-    <div slot="tag" class="tag-container | cluster" style="--gutter: var(--space-2xs)">
-      <!-- Conditions -->
-      {% if item.data.conditions and item.data.conditions.length > 0 %}
-        {% for condition in item.data.conditions %}
-          <span class="button" data-button-variant="primary" data-small-button>{{ condition }}</span>
-        {% endfor %}
-      {% endif %}
-
-      <!-- Topics (optional - shown only if not compact or explicitly requested) -->
-      {% if (not isCompact or showTopics) 
-        and item.data.topics and item.data.topics.length > 0 %}
-        {% for topic in item.data.topics %}
-          <span class="button" data-button-variant="secondary" data-small-button>{{ topic }}</span>
-        {% endfor %}
-      {% endif %}
-    </div>
-  </div>
-
-  <!-- Group 4: PICO (only shown if not compact mode or explicitly requested) -->
-  {% if (not isCompact or showPICO) 
-    and item.data.pico %}
-    <div class="card-group">
-      <div slot="content" class="pico">{{ item.data.pico | markdownFormat | safe }}</div>
-    </div>
-  {% endif %}
+  <p slot="content" class="text-step-min-1">{{ item.data.pico }}</p>
 </custom-card>
 
 {% css "local" %}
-{% include "css/custom-card.css" %}
-
-/* Universal card styles */
-.universal-card {
-  --card-bg: var(--color-bg-accent);
-}
-
-/* Card group styles */
-.universal-card .card-group {
-  width: 100%;
-}
-
-/* Publication info styling */
-.universal-card .publication-info {
-  font-size: var(--size-step-min-1);
-  color: var(--color-text-accent);
-}
+  {% include "css/custom-card.css" %}
 
 
-/* Tag container styling */
-.universal-card .tag-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs);
-}
-
-/* Compact mode specific styles */
-.universal-card.compact {
-  padding: var(--space-xs-s);
-  --flow-space: var(--space-s);
-}
-
-.universal-card.compact .publication-info {
-  font-size: var(--size-step-min-2);
-}
-
-.universal-card.compact .button[data-small-button] {
-  --button-padding: var(--space-3xs) var(--space-xs);
-  --button-font-size: var(--size-step-min-2);
-}
-
-/* PICO styling */
-.universal-card .pico {
-  font-size: var(--size-step-min-1);
-}
-
-/* Make the card responsive to different widths */
-@container (max-width: 25rem) {
-  .universal-card:not(.compact) {
-    --flow-space: var(--space-s);
-  }
-  
-  .universal-card:not(.compact) .publication-info {
-    font-size: var(--size-step-min-2);
-  }
-}
 {% endcss %}

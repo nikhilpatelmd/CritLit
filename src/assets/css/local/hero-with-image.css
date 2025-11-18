@@ -1,0 +1,9 @@
+.hero-with-image {
+  background:
+    linear-gradient(to bottom,
+      transparent 0%,
+      var(--color-bg) 100%),
+    url('/assets/images/backgrounds/books.jpg') center/cover no-repeat;
+  background-color: transparent;
+
+}

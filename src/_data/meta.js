@@ -2,7 +2,7 @@ export const url = process.env.URL || 'http://localhost:8080';
 // Extract domain from `url`
 export const domain = new URL(url).hostname;
 export const siteName = 'CritLit';
-export const siteDescription = 'A living repository of influential literature in critical care medicine.';
+export const siteDescription = 'A living repository of influential literature in critical care medicine';
 export const siteType = 'Blog'; // schema
 export const locale = 'en_EN';
 export const lang = 'en';
