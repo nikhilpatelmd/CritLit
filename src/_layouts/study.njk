@@ -1,55 +1,189 @@
 ---
 layout: base
 schema: BlogPosting
+customHeader: true
 ---
 
-<div class="region" style="--region-space-top: var(--space-xl-2xl)">
-  <div class="wrapper flow prose">
-    <h1 class="gradient-text">{{ title }}</h1>
+<!-- Main content container -->
+<main id="main" class="flow">
+  <!-- Colored background section containing both navbar and hero -->
+  <div class="full | section" style="--spot-color: var(--color-bg-accent); margin-top: calc(var(--space-xl-2xl) * -1);">
+    <div class="section__inner">
+      <!-- Site navigation header -->
+      <header class="site-header" style="padding-top: var(--space-xl-2xl);">
+        {% include "partials/header.njk" %}
+      </header>
 
-    {% if image %}
-      {% image image, alt or "", credit, "eager", "feature" %}
-    {% endif %}
+      <!-- Content header inside main -->
+      <header class="content-header region wrapper flow" style="--region-space-top: var(--space-xl); --region-space-bottom: var(--space-xl); --flow-space: var(--space-m);">
+        <!-- Title Section -->
+        <div style="--flow-space: var(--space-s);">
+          <h1 class="gradient-text" style="margin-bottom: var(--space-2xs);">{{ acronym }}</h1>
+          {% if title and title != acronym %}
+            <h2 class="visually-hidden">{{ title }}</h2>
+          {% endif %}
+        </div>
 
-    <p class="meta | cluster gutter-xs-s">
-      {%- if draft -%}
-        <span class="button" data-small-button data-button-variant="tertiary">draft</span>
-      {%- endif %}
-  
-      {% set definedDate = date %} 
-      {% include "partials/date.njk" %}
+        <!-- Metadata List -->
+        <div class="cluster" style="--cluster-horizontal-alignment: flex-start; --gutter: var(--space-s); margin-top: calc(var(--space-xs) * -1);">
+          {% if datePublished %}
+            <div class="cluster" style="--gutter: 0.5ch; --cluster-vertical-alignment: baseline;">
+              <dt class="text-step-min-1" style="font-weight: var(--font-bold);">Published:</dt>
+              <dd class="text-step-min-1">{% set definedDate = datePublished %}{% include "partials/date.njk" %}</dd>
+            </div>
+          {% endif %}
+          {% if journal %}
+            <div class="cluster" style="--gutter: 0.5ch; --cluster-vertical-alignment: baseline;">
+              <dt class="text-step-min-1" style="font-weight: var(--font-bold);">Journal:</dt>
+              <dd class="text-step-min-1">{{ journal }}</dd>
+            </div>
+          {% endif %}
+          {% if doi %}
+            <div class="cluster" style="--gutter: 0.5ch; --cluster-vertical-alignment: baseline;">
+              <dt class="text-step-min-1" style="font-weight: var(--font-bold);">DOI:</dt>
+              <dd class="text-step-min-1">
+                <a href="https://doi.org/{{ doi }}" target="_blank" rel="noopener noreferrer">{{ doi }}</a>
+              </dd>
+            </div>
+          {% endif %}
+          {% if pmid %}
+            <div class="cluster" style="--gutter: 0.5ch; --cluster-vertical-alignment: baseline;">
+              <dt class="text-step-min-1" style="font-weight: var(--font-bold);">PMID:</dt>
+              <dd class="text-step-min-1">
+                <a href="https://pubmed.ncbi.nlm.nih.gov/{{ pmid }}" target="_blank" rel="noopener noreferrer">{{ pmid }}</a>
+              </dd>
+            </div>
+          {% endif %}
+          {% if rctIdentifier %}
+            <div class="cluster" style="--gutter: 0.5ch; --cluster-vertical-alignment: baseline;">
+              <dt class="text-step-min-1" style="font-weight: var(--font-bold);">ClinicalTrials.gov ID:</dt>
+              <dd class="text-step-min-1">
+                <a href="https://clinicaltrials.gov/show/{{ rctIdentifier }}" target="_blank" rel="noopener noreferrer">{{ rctIdentifier }}</a>
+              </dd>
+            </div>
+          {% endif %}
+        </div>
 
-      {% if condition %}
-        <a class="button" href="/conditions/{{ condition | slugify }}/" data-small-button> 
-          {{ condition }} 
-        </a>
-      {% endif %}
+        <!-- Conditions, Topics, Tags -->
+        <div class="cluster" style="--cluster-horizontal-alignment: flex-start; --gutter: var(--space-xs);">
+          {% if conditions and conditions.length > 0 %}
+            {% for conditionItem in conditions %}
+              <a href="/conditions/{{ conditionItem | slugify }}/" class="button" data-button-variant="primary" data-small-button>
+                {{ conditionItem }}
+              </a>
+            {% endfor %}
+          {% endif %}
+          {% if topics and topics.length > 0 %}
+            {% for topicItem in topics %}
+              <a href="/topics/{{ topicItem | slugify }}/" class="button" data-button-variant="secondary" data-small-button>
+                {{ topicItem }}
+              </a>
+            {% endfor %}
+          {% endif %}
+          {% if tags and tags.length > 0 %}
+            {% for tagItem in tags %}
+              {% set isCondition = false %}
+              {% if conditions %}
+                {% for c in conditions %}
+                  {% if c == tagItem %}{% set isCondition = true %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+              {% set isTopic = false %}
+              {% if topics %}
+                {% for t in topics %}
+                  {% if t == tagItem %}{% set isTopic = true %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+              {% if tagItem != "studies" and not isCondition and not isTopic %}
+                <a class="button" href="/tags/{{ tagItem | slugify }}/" data-button-variant="tertiary" data-small-button>{{ tagItem }}</a>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </div>
 
-      {% if topic %}
-        <a class="button" href="/topics/{{ topic | slugify }}/" data-small-button> 
-          {{ topic }} 
-        </a>
-      {% endif %}
+        <!-- PICO Question -->
+        <div>
+          <h2 class="visually-hidden">PICO Question</h2>
+          <div class="prose text-step-2">
+            {{ pico | markdownFormat | safe }}</div>
+        </div>
 
-    </p>
-
-    {{ content | safe }}
-    {% include 'partials/edit-on.njk' %}
+        {% if gist %}
+          <div class="flow">
+            <h2 class="visually-hidden">The Gist</h2>
+            <div class = "prose">
+              {{ gist | markdownFormat | safe }}
+            </div>
+          </div>
+        {% endif %}
+      </header>
+    </div>
   </div>
 
-  <div hidden class="h-entry">
-    <a class="u-url" href="{{ page.url | url | absoluteUrl(meta.url) }}">{{ title }}</a>
-    <a class="p-name u-url" rel="author" href="{{ meta.url }}">{{ meta.author.name }}</a>
-    <img
+  <!-- Main article content with white background -->
+  <article class="wrapper flow prose" style="margin-top: var(--space-xl);">
+    {{ content | safe }}
+    {# Main markdown content from the .md file #}
+
+    {# Related Commentary Section #}
+    {% if relatedCommentary and relatedCommentary.length > 0 %}
+      <section class="commentary-section flow" style="margin-top: var(--space-xl);">
+        <h2>Related Commentary & Discussion</h2>
+        <ul class="commentary-list flow" style="--flow-space: var(--space-l); padding-left: 0; list-style: none;">
+          {% for comment in relatedCommentary %}
+            <li class="comment-item flow" style="--flow-space: var(--space-2xs); border-bottom: 1px solid var(--color-border); padding-bottom: var(--space-s); margin-bottom: var(--space-s);">
+              <h3 class="comment-title text-step-0" style="margin-bottom: var(--space-3xs);">
+                <a href="{{ comment.url }}" target="_blank" rel="noopener noreferrer">{{ comment.title }}</a>
+              </h3>
+              <p class="comment-meta text-step-min-1" style="color: var(--color-text-subtle);">
+                <strong>Type:</strong>
+                {{ comment.type }}<br>
+                {% if comment.authors %}
+                  <strong>Authors:</strong>
+                  {{ comment.authors }}<br>
+                {% endif %}
+                {% if comment.source %}
+                  <strong>Source:</strong>
+                  {{ comment.source }}
+                {% endif %}
+                {% if comment.date %}
+                    ({{ comment.date | formatDate }}){% endif %}
+              </p>
+              {% if comment.notes is string and comment.notes %}
+                <p class="comment-notes text-step-min-1">{{ comment.notes | markdownFormat | safe }}</p>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+    {% include 'partials/edit-on.njk' %}
+  </article>
+</main>
+
+{# Existing hidden h-entry block for microformats #}
+<div hidden class="h-entry">
+  <a class="u-url" href="{{ page.url | url | absoluteUrl(meta.url) }}">{{ title }}</a>
+  <a class="p-name u-url" rel="author" href="{{ meta.url }}">{{ meta.author.name }}</a>
+  <img
       eleventy:ignore
       class="u-author h-card"
       src="{{ meta.author.avatar | url | absoluteUrl(meta.url) }}"
       alt="{{ meta.author.name }}"
-    />
-  </div>
+/>
 </div>
 
+{# CSS includes #}
 {%- css "local" -%}
-  {%- include 'css/post.css' -%}
-  {%- include 'css/footnotes.css' -%}
+{%- include 'css/post.css' -%}
+{%- include 'css/footnotes.css' -%}
+
+  /* Make all dt elements bold in metadata lists */
+  .metadata-list dt {
+    font-weight: var(--font-bold);
+  }
+
 {%- endcss -%}

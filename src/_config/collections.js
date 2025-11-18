@@ -1,3 +1,8 @@
+/** All relevant pages as a collection for sitemap.xml */
+export const showInSitemap = collection => {
+  return collection.getFilteredByGlob('./src/**/*.{md,njk}');
+};
+
 /** All blog posts as a collection. */
 export const getAllPosts = collection => {
   return collection.getFilteredByGlob('./src/posts/**/*.md').reverse();
@@ -9,8 +14,18 @@ export const getAllStudies = collection => {
   return collection.getFilteredByGlob('./src/studies/**/*.md').reverse();
 };
 
-/** All unique 'condition' values from all studies to create a dynamic index. */
-export const conditionList = collection => {
+/** All tags from all posts as a collection - excluding custom collections */
+export const tagList = collection => {
+  const tagsSet = new Set();
+  collection.getAll().forEach(item => {
+    if (!item.data.tags) return;
+    item.data.tags.filter(tag => !['posts', 'docs', 'all'].includes(tag)).forEach(tag => tagsSet.add(tag));
+  });
+  return Array.from(tagsSet).sort();
+};
+
+/** All unique 'condition' values from study summaries. */
+export const uniqueConditions = collection => {
   const conditionsSet = new Set();
   // Only check files that belong to the 'studies' collection
   collection.getFilteredByGlob('./src/studies/**/*.md').forEach(item => {
@@ -24,8 +39,8 @@ export const conditionList = collection => {
   return Array.from(conditionsSet).sort();
 };
 
-/** All unique 'topic' values from all studies to create a dynamic index. */
-export const topicList = collection => {
+/** All unique 'topic' values from study summaries. */
+export const uniqueTopics = collection => {
   const topicsSet = new Set();
   // Only check files that belong to the 'studies' collection
   collection.getFilteredByGlob('./src/studies/**/*.md').forEach(item => {
@@ -37,19 +52,4 @@ export const topicList = collection => {
   });
   // Returns a sorted array of unique topic names (e.g., ['blood pressure control', 'hemostasis', ...])
   return Array.from(topicsSet).sort();
-};
-
-/** All relevant pages as a collection for sitemap.xml */
-export const showInSitemap = collection => {
-  return collection.getFilteredByGlob('./src/**/*.{md,njk}');
-};
-
-/** All tags from all posts as a collection - excluding custom collections */
-export const tagList = collection => {
-  const tagsSet = new Set();
-  collection.getAll().forEach(item => {
-    if (!item.data.tags) return;
-    item.data.tags.filter(tag => !['posts', 'docs', 'all'].includes(tag)).forEach(tag => tagsSet.add(tag));
-  });
-  return Array.from(tagsSet).sort();
 };
