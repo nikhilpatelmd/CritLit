@@ -40,27 +40,27 @@
     },
     {
       "name": "Purple",
-      "value": "#5F5880"
+      "value": "#4A486D"
     },
     {
       "name": "Purple Subdued",
-      "value": "#5f5a79"
+      "value": "#4a4967"
     },
     {
       "name": "Blue",
-      "value": "#A8C6F3"
+      "value": "#4083A7"
     },
     {
       "name": "Blue Subdued",
-      "value": "#aec6ea"
+      "value": "#4f829e"
     },
     {
-      "name": "Gold",
-      "value": "#FFD78F"
+      "name": "Aqua",
+      "value": "#AAECD7"
     },
     {
-      "name": "Gold Subdued",
-      "value": "#f8d9a0"
+      "name": "Aqua Subdued",
+      "value": "#b5e9d8"
     }
   ]
 }

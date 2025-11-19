@@ -11,15 +11,15 @@
   "light_dark": [
     {
       "name": "Purple",
-      "value": "#5F5880"
+      "value": "#4A486D"
     },
     {
       "name": "Blue",
-      "value": "#A8C6F3"
+      "value": "#4083A7"
     },
     {
-      "name": "Gold",
-      "value": "#FFD78F"
+      "name": "Aqua",
+      "value": "#AAECD7"
     }
   ],
   "standalone": []
