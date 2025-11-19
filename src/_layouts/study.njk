@@ -103,21 +103,23 @@ customHeader: true
           {% endif %}
         </div>
 
-        <!-- PICO Question -->
-        <div>
-          <h2 class="visually-hidden">PICO Question</h2>
-          <div class="prose text-step-2">
+<div class="sidebar" style="--sidebar-target-width: 32rem; --sidebar-content-min-width: 60%;">
+          <div>
+            <h2 class="visually-hidden">PICO Question</h2>
+            <div class="prose text-step-2 bold">
             {{ pico | markdownFormat | safe }}</div>
-        </div>
-
-        {% if gist %}
-          <div class="flow">
-            <h2 class="visually-hidden">The Gist</h2>
-            <div class = "prose">
-              {{ gist | markdownFormat | safe }}
-            </div>
           </div>
-        {% endif %}
+
+          {% if gist %}
+            <div class="flow">
+              <h2 class="visually-hidden">The Gist</h2>
+              <div class = "prose text-step-0">
+                {{ gist | markdownFormat | safe }}
+     
+         </div>
+            </div>
+          {% endif %}
+        </div>
       </header>
     </div>
   </div>

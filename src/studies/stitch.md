@@ -13,7 +13,7 @@ topic:
   - Neurosurgical Intervention
   - Open Craniotomy
 
-pico: In patients with spontaneous supratentorial intracerebral hematomas of at least 2 cm in diameter, does a policy of early surgical hematoma evacuation compared to initial conservative medical management lead to a better functional outcome (favorable on GOS) at 6 months?
+pico: In patients with spontaneous supratentorial intracerebral hemorrhage, does a strategy of early surgical hematoma evacuation improve functional outcomes at 180 days when compared to initial medical management?
 
 gist: |
   The original STICH trial was a pivotal international randomized controlled trial designed to determine the overall role of surgical hematoma evacuation via open craniotomy in patients with spontaneous supratentorial ICH. The study randomized 1033 patients to either a policy of early surgery or initial conservative medical treatment. The primary analysis found no statistically significant overall benefit for the policy of early surgery on the primary outcome of favorable functional status (Glasgow Outcome Scale) at 6 months. However, prespecified subgroup analyses hinted at a potential benefit for patients with **superficial/lobar ICH** and those with a **mid-range Glasgow Coma Score (9–12)**, which spurred the subsequent STICH-II trial to investigate the lobar subgroup further.

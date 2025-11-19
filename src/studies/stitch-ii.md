@@ -12,7 +12,7 @@ condition:
 topic:
   - Neurosurgical Intervention
   - Open Craniotomy
-pico: In conscious patients with spontaneous supratentorial lobar intracerebral hematomas without intraventricular hemorrhage, does early surgery (within 12 hours) via open craniotomy compared to initial conservative medical treatment lead to a better prognosis-based dichotomized outcome (favorable or unfavorable GOSE) at 6 months?
+pico: In patients with supratentorial lobar intracerebral hemorrhage, does early hematoma evacuation improve functional outcomes at 6 months when compared to initial medical management?
 gist: |
   The STICH II trial was conducted to test the hypothesis that early open surgical evacuation of intracerebral hemorrhage (ICH) might benefit a specific subgroup: conscious patients with superficial lobar hematomas. This international randomized trial compared early surgical evacuation (within 12 hours of randomization) to initial conservative medical treatment. The primary outcome, a favorable result on the Extended Glasgow Outcome Scale (GOSE) at 6 months, showed no statistically significant difference between the two groups. While the trial confirmed that early surgery did not increase death or disability, it failed to demonstrate clear efficacy for the routine use of craniotomy in this specific patient population, reinforcing the challenge of surgical management for ICH.
 ---
