@@ -3,10 +3,10 @@ import path from 'node:path';
 import postcss from 'postcss';
 import postcssImport from 'postcss-import';
 import postcssImportExtGlob from 'postcss-import-ext-glob';
-import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
 import fg from 'fast-glob';
+import {writeTokensCss} from '../setup/generate-tokens-css.js';
 
 const buildCss = async (inputPath, outputPaths) => {
   const inputContent = await fs.readFile(inputPath, 'utf-8');
@@ -14,7 +14,6 @@ const buildCss = async (inputPath, outputPaths) => {
   const result = await postcss([
     postcssImportExtGlob,
     postcssImport,
-    tailwindcss,
     autoprefixer,
     cssnano
   ]).process(inputContent, {from: inputPath});
@@ -28,6 +27,9 @@ const buildCss = async (inputPath, outputPaths) => {
 };
 
 export const buildAllCss = async () => {
+  // Generate tokens.css and utilities/generated.css from design tokens
+  await writeTokensCss();
+
   const tasks = [];
 
   tasks.push(buildCss('src/assets/css/global/global.css', ['src/_includes/css/global.css']));

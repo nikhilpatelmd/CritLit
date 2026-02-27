@@ -5,6 +5,8 @@ node_modules
 dist
 src/_includes/css
 src/_includes/scripts
+src/assets/css/global/base/tokens.css
+src/assets/css/global/utilities/generated.css
 
 # cache
 .cache

@@ -1,9 +1,7 @@
-@import 'tailwindcss/base' layer(tailwindBase);
-
 @import 'base/reset.css' layer(reset);
 @import 'base/fonts.css' layer(fonts);
 
-@import 'tailwindcss/components' layer(tailwindComponents);
+@import 'base/tokens.css' layer(tokens);
 
 @import 'base/variables.css' layer(variables);
 @import 'base/global-styles.css' layer(global);
@@ -14,5 +12,3 @@
 
 /* debugging */
 /* @import-glob 'tests/*.css' layer(test); */
-
-@import 'tailwindcss/utilities' layer(tailwindUtilities);

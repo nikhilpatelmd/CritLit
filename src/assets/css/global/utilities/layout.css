@@ -1,0 +1,15 @@
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.bold {
+  font-weight: var(--font-bold);
+}
