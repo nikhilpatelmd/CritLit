@@ -1,39 +1,32 @@
 @font-face {
-  font-family: 'Newsreader';
+  font-family: 'Sentient';
   font-style: normal;
   font-display: swap;
-  font-weight: 250;
+  font-weight: 100 900;
   src:
     local(''),
-    url('/assets/fonts/newsreader/newsreader-variablefont_opszwght-webfont.woff2') format('woff2');
+    url('/assets/fonts/sentient/Sentient-Variable.woff2') format('woff2'),
+    url('/assets/fonts/sentient/Sentient-Variable.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Newsreader';
+  font-family: 'Sentient';
   font-style: italic;
   font-display: swap;
-  font-weight: 250;
+  font-weight: 100 900;
   src:
     local(''),
-    url('/assets/fonts/newsreader/newsreader-italic-variablefont_opszwght-webfont.woff2') format('woff2');
+    url('/assets/fonts/sentient/Sentient-VariableItalic.woff2') format('woff2'),
+    url('/assets/fonts/sentient/Sentient-VariableItalic.woff') format('woff');
 }
 
 @font-face {
-  font-family: 'Newsreader';
+  font-family: 'Gambetta';
   font-style: normal;
   font-display: swap;
-  font-weight: 800;
+  font-weight: 100 900;
   src:
     local(''),
-    url('/assets/fonts/newsreader/newsreader-variablefont_opszwght-webfont.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Apfel Grotezk';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 800;
-  src:
-    local(''),
-    url('/assets/fonts/apfel/apfelgrotezk-fett-webfont.woff2') format('woff2');
+    url('/assets/fonts/gambetta/Gambetta-Variable.woff2') format('woff2'),
+    url('/assets/fonts/gambetta/Gambetta-Variable.woff') format('woff');
 }
