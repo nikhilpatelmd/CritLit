@@ -13,3 +13,6 @@ src/assets/css/global/utilities/generated.css
 
 # secret data
 .env
+
+# DuckDB temporary files (safe to ignore; regenerated automatically)
+*.duckdb.wal
