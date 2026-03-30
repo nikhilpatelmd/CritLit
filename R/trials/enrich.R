@@ -1,5 +1,6 @@
 # R/trials/enrich.R
-# Source: 10.1056/NEJMoa2308440
+# ENRICH trial data. Uses `con` from seed.R's environment.
+# Source: Pradilla et al., NEJM 2024. PMID: 38598795
 
 # ── Trial record ──────────────────────────────────────────────────────────────
 enrich_trial <- tibble(
@@ -17,9 +18,6 @@ enrich_trial <- tibble(
 dbAppendTable(con, "trials", enrich_trial)
 
 # ── Tags ──────────────────────────────────────────────────────────────────────
-# Tags must already exist in the tags table (inserted by an earlier script or
-# a shared tags setup block). trial_tags just links this trial to them.
-
 enrich_trial_tags <- tibble(
   trial_id = "enrich",
   tag_id = c(
@@ -33,7 +31,6 @@ dbAppendTable(con, "trial_tags", enrich_trial_tags)
 
 # ── Links ─────────────────────────────────────────────────────────────────────
 enrich_links <- tibble(
-  link_id = 1L,
   trial_id = "enrich",
   url = "https://doi.org/10.1056/NEJMoa2308440",
   label = "Primary Publication",
@@ -45,24 +42,21 @@ dbAppendTable(con, "links", enrich_links)
 
 # ── Outcomes ──────────────────────────────────────────────────────────────────
 enrich_outcomes <- tibble(
-  outcome_id = c("enrich_mrs_180d"),
+  outcome_id = "enrich_mrs_180d",
   trial_id = "enrich",
-  outcome_name = c("mRS at 180 days"),
-  outcome_type = c("ordinal"),
-  scale_name = c("mRS"),
-  time_point = c("180 days"),
-  is_primary = c(TRUE),
-  notes = c(
-    "Utility-weighted mRS used as primary analysis; raw distribution stored here"
-  )
+  outcome_name = "mRS at 180 days",
+  outcome_type = "ordinal",
+  scale_name = "mRS",
+  time_point = "180 days",
+  is_primary = TRUE,
+  notes = "Utility-weighted mRS used as primary analysis; raw ordinal distribution stored here."
 )
 
 dbAppendTable(con, "outcomes", enrich_outcomes)
 
 # ── Results ───────────────────────────────────────────────────────────────────
-# Ordinal mRS distribution, one row per arm per score level.
-# Source: Table 2, Pradilla et al. NEJM 2024
-
+# Counts verified against Table 2, Pradilla et al. NEJM 2024.
+# result_id omitted — filled automatically by DuckDB sequence.
 enrich_mrs <- tibble(
   outcome_id = "enrich_mrs_180d",
   trial_id = "enrich",
@@ -84,9 +78,8 @@ enrich_mrs <- tibble(
     17,
     18,
     27
-  ), # Medical (n=150)
+  ), # Medical Management (n=150)
   total_n = 150L
-) %>%
-  mutate(result_id = row_number()) # simple integer PK
+)
 
 dbAppendTable(con, "results_ordinal", enrich_mrs)

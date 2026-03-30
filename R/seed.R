@@ -13,6 +13,11 @@ con <- dbConnect(duckdb::duckdb(), "critlit.duckdb")
 # We drop and recreate all tables on each run. This keeps seed.R as the single
 # source of truth for structure. Per-trial scripts only do INSERT operations.
 
+# Sequences are dropped independently — they're not FK-referenced, so order
+# relative to tables doesn't strictly matter, but keeping them first is tidy.
+dbExecute(con, "DROP SEQUENCE IF EXISTS link_id_seq")
+dbExecute(con, "DROP SEQUENCE IF EXISTS result_id_seq")
+
 # Drop in reverse dependency order to avoid FK constraint errors
 dbExecute(con, "DROP TABLE IF EXISTS results_continuous")
 dbExecute(con, "DROP TABLE IF EXISTS results_dichotomous")
@@ -22,6 +27,13 @@ dbExecute(con, "DROP TABLE IF EXISTS links")
 dbExecute(con, "DROP TABLE IF EXISTS trial_tags")
 dbExecute(con, "DROP TABLE IF EXISTS tags")
 dbExecute(con, "DROP TABLE IF EXISTS trials")
+
+# ── Sequences ─────────────────────────────────────────────────────────────────
+# Auto-incrementing counters for surrogate PKs. DuckDB fills these in
+# automatically when the column is omitted from an INSERT — meaning per-trial
+# scripts never need to manage ID values themselves.
+dbExecute(con, "CREATE SEQUENCE link_id_seq START 1")
+dbExecute(con, "CREATE SEQUENCE result_id_seq START 1")
 
 dbExecute(
   con,
@@ -69,7 +81,7 @@ dbExecute(
   con,
   "
   CREATE TABLE links (
-    link_id     INTEGER PRIMARY KEY,  -- simple integer, auto-assigned in R
+    link_id     INTEGER DEFAULT nextval('link_id_seq') PRIMARY KEY,
     trial_id    VARCHAR NOT NULL REFERENCES trials(trial_id),
     url         VARCHAR NOT NULL,
     label       VARCHAR NOT NULL,
@@ -107,7 +119,7 @@ dbExecute(
   con,
   "
   CREATE TABLE results_ordinal (
-    result_id   INTEGER PRIMARY KEY,
+    result_id  INTEGER DEFAULT nextval('result_id_seq') PRIMARY KEY,
     outcome_id  VARCHAR NOT NULL REFERENCES outcomes(outcome_id),
     trial_id    VARCHAR NOT NULL REFERENCES trials(trial_id),
     arm         VARCHAR NOT NULL CHECK (arm IN ('intervention', 'control')),
@@ -124,7 +136,7 @@ dbExecute(
   con,
   "
   CREATE TABLE results_dichotomous (
-    result_id   INTEGER PRIMARY KEY,
+    result_id  INTEGER DEFAULT nextval('result_id_seq') PRIMARY KEY,
     outcome_id  VARCHAR NOT NULL REFERENCES outcomes(outcome_id),
     trial_id    VARCHAR NOT NULL REFERENCES trials(trial_id),
     arm         VARCHAR NOT NULL CHECK (arm IN ('intervention', 'control')),
@@ -141,7 +153,7 @@ dbExecute(
   con,
   "
   CREATE TABLE results_continuous (
-    result_id   INTEGER PRIMARY KEY,
+    result_id  INTEGER DEFAULT nextval('result_id_seq') PRIMARY KEY,
     outcome_id  VARCHAR NOT NULL REFERENCES outcomes(outcome_id),
     trial_id    VARCHAR NOT NULL REFERENCES trials(trial_id),
     arm         VARCHAR NOT NULL CHECK (arm IN ('intervention', 'control')),
