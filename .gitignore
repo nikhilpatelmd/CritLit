@@ -16,3 +16,5 @@ src/assets/css/global/utilities/generated.css
 
 # DuckDB temporary files (safe to ignore; regenerated automatically)
 *.duckdb.wal
+
+inspo/
