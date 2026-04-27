@@ -12,7 +12,9 @@ mistie_iii_trial <- tibble(
   doi = "10.1016/S0140-6736(19)30195-3",
   pmid = "30739747",
   trial_registration = "NCT01827046",
-  funding_source = "NINDS, Genentech Inc."
+  funding_source = "NINDS, Genentech Inc.",
+  pico = "In patients with supratentorial intracerebral hemorrhage, does minimally-invasive catheter evacuation of the hematoma followed by thrombolysis with alteplase improve functional outcome at 365 days when compared to standard medical management?",
+  gist = "The MISTIE-III trial was a phase 3 study designed to test whether a novel technique—minimally invasive catheter evacuation of the clot combined with local thrombolysis (alteplase)—could improve long-term functional recovery in patients with moderate to large supratentorial ICH. Patients were randomized to receive the MISTIE procedure or standard medical care. At the primary endpoint of 365 days, the study found no statistically significant difference in the proportion of patients who achieved a good functional outcome (mRS 0-3). However, the procedure was successfully and safely adopted by surgeons, and the null result helped clarify the role of surgery in ICH, directly influencing the design of subsequent trials like ENRICH."
 )
 
 dbAppendTable(con, "trials", mistie_iii_trial)

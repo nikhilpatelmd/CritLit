@@ -12,7 +12,9 @@ switch_trial <- tibble(
   doi = "10.1016/S0140-6736(24)00702-5",
   pmid = "38761811",
   trial_registration = "NCT02258919",
-  funding_source = "Swiss National Science Foundation, Swiss Heart Foundation, Inselspital Stiftung, and Boehringer Ingelheim"
+  funding_source = "Swiss National Science Foundation, Swiss Heart Foundation, Inselspital Stiftung, and Boehringer Ingelheim",
+  pico = "In adults with spontaneous deep intracerebral hemorrhage, does decompressive craniectomy improve functional outcomes at 180 days when compared to standard medical management?",
+  gist = "The SWITCH trial investigated the role of decompressive craniectomy (DC) for severe, deep-seated intracerebral hemorrhage (ICH), a form of stroke associated with high mortality. Patients were randomized to DC plus best medical treatment or medical treatment alone. The trial was unfortunately stopped early due to lack of funding, which limited its statistical power to reach a definitive conclusion. Despite this limitation, the study provided weak evidence suggesting DC might be superior, with a potential absolute risk reduction of death or profound disability by 13% at 180 days. While not definitive, the findings contribute to the debate on DC's potential benefit in this devastating patient population."
 )
 
 dbAppendTable(con, "trials", switch_trial)

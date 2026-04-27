@@ -47,7 +47,9 @@ dbExecute(
     doi               VARCHAR,
     pmid              VARCHAR,
     trial_registration VARCHAR,
-    funding_source    VARCHAR
+    funding_source    VARCHAR,
+    pico              VARCHAR,
+    gist              VARCHAR
   )
 "
 )
